@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+*.$py.class
+Jsons/
+.env
+.env.local
+.env.*.local
