@@ -13,16 +13,18 @@ warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
 load_dotenv()
 
-server = os.getenv('server')
-database = os.getenv('database')
-username = os.getenv('username')
-password = os.getenv('password')
+db_server = os.getenv('DB_SERVER')
+db_name = os.getenv('DB_NAME')
+db_user = os.getenv('DB_USER')
+db_password = os.getenv('DB_PASSWORD')
 COMPLEO_API_TOKEN = os.getenv('COMPLEO_API_TOKEN')
+COMPLEO_API_BASE_URL = os.getenv('COMPLEO_API_BASE_URL', 'https://api.compleo.app/public').rstrip('/')
+COMPLEO_COMPANY_ID = os.getenv('COMPLEO_COMPANY_ID')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.StreamHandler()])
 
 table_name = 'api_listaUsuarios'
-url = "https://api.compleo.app/public/userlist/100056"
+url = f"{COMPLEO_API_BASE_URL}/userlist/{COMPLEO_COMPANY_ID}"
 
 body_template = {
   "fields": [
@@ -391,10 +393,10 @@ def process_usuarios_compleo():
         with requests.Session() as session:
             conn_str = (
                 f'DRIVER={{ODBC Driver 18 for SQL Server}};'
-                f'SERVER={server};'
-                f'DATABASE={database};'
-                f'UID={username};'
-                f'PWD={password};'
+                f'SERVER={db_server};'
+                f'DATABASE={db_name};'
+                f'UID={db_user};'
+                f'PWD={db_password};'
                 f'TrustServerCertificate=yes;'
             )
             
